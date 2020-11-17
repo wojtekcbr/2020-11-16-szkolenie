@@ -13,6 +13,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tags({@Tag("paramTest"), @Tag("junit")})
 @DisplayName("Parameterized Test")
 public class JunitParameterizedTest {
 
@@ -54,6 +55,7 @@ public class JunitParameterizedTest {
         assertThat(paramEnum.toString()).contains("ENUM");
     }
 
+    @Tag("wordpress")
     @DisplayName("Wordpress test")
     @ParameterizedTest(name = "Wordpress test {0}")
     @ValueSource(strings = {"1", "1000", "10000"})
