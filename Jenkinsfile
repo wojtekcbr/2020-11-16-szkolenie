@@ -8,7 +8,7 @@ pipeline {
         }
         stage('run') {
             steps {
-                bat "mvn clean test"
+                bat "mvn clean test -Dgroups=${params.gr}"
             }
         }
         post {

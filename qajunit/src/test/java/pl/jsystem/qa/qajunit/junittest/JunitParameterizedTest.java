@@ -1,6 +1,7 @@
 package pl.jsystem.qa.qajunit.junittest;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayName("Parameterized Test")
 public class JunitParameterizedTest {
 
+    @Tag("junit")
     @DisplayName("First paramerized test")
     @ParameterizedTest(name = "Parameter test witch value 5.")
     @ValueSource(ints = {5, 15, 20})
