@@ -31,6 +31,7 @@ public class JunitParameterizedTest {
         assertThat(param).contains("Hello");
     }
 
+    @Tag("junit")
     @DisplayName("Parame test with multi param")
     @ParameterizedTest(name = "Parametrized test fort multi param: {0}, {1}")
     @CsvSource(value = {"Hello; 5", "Hello junit; 15", "'Hello, students'; 35"}, delimiter = ';')
