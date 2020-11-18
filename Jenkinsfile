@@ -8,8 +8,6 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome','firefox', 'edge'], description: 'Choose browser.')
         choice(name: 'MACHINE', choices: ['remote','local'], description: 'Choose machine type.')
         string(name: 'REMOTE_URL', defaultValue: 'http://172.17.80.1:4444/wd/hub', description: 'Remote selenium gridurl.')
-
-
     }
 
     stages {
