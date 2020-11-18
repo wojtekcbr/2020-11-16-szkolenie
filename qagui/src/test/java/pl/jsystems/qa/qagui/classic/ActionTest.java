@@ -1,12 +1,14 @@
 package pl.jsystems.qa.qagui.classic;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import pl.jsystems.qa.qagui.classic.page.MainWordpressPage;
 import pl.jsystems.qa.qagui.config.GuiConfig;
 
-@Tags({@Tag("Frontend"), @Tag("ActionTest")})
+@Tag("Frontend")
 public class ActionTest extends ConfigFrontEnd {
 
     @DisplayName("Simple action")
@@ -33,6 +35,5 @@ public class ActionTest extends ConfigFrontEnd {
         action.sendKeys(Keys.chord(Keys.CONTROL, "R")).perform();
         action.sendKeys(Keys.chord(Keys.ESCAPE)).perform();
         action.sendKeys(Keys.chord(Keys.ENTER)).perform();
-
     }
 }

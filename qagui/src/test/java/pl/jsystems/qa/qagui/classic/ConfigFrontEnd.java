@@ -23,27 +23,36 @@ public class ConfigFrontEnd {
 
     @BeforeEach
     public void setUpEach() {
-        try {
-            System.setProperty("webdriver.chrome.driver", Paths.get(getClass().getClassLoader().getResource("driver/chromedriver.exe").toURI()).toFile().getAbsolutePath());
-            System.setProperty("webdriver.gecko.driver", Paths.get(getClass().getClassLoader().getResource("driver/geckodriver.exe").toURI()).toFile().getAbsolutePath());
-            System.setProperty("webdriver.edge.driver", Paths.get(getClass().getClassLoader().getResource("driver/msedgedriver.exe").toURI()).toFile().getAbsolutePath());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+
+        if (GuiConfig.MACHINE.equals("local")) {
+            try {
+                System.setProperty("webdriver.chrome.driver", Paths.get(getClass().getClassLoader().getResource("driver/chromedriver.exe").toURI()).toFile().getAbsolutePath());
+                System.setProperty("webdriver.gecko.driver", Paths.get(getClass().getClassLoader().getResource("driver/geckodriver.exe").toURI()).toFile().getAbsolutePath());
+                System.setProperty("webdriver.edge.driver", Paths.get(getClass().getClassLoader().getResource("driver/msedgedriver.exe").toURI()).toFile().getAbsolutePath());
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            driver = setWebDriver();
+        } else {
+            driver = setRemoteDriver();
         }
-        driver = new ChromeDriver();
+
+        setUpDriver();
+
+    }
+
+
+    private void setUpDriver() {
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-
-        driver = setWebDriver();
-        setWebDriver();
-
     }
 
     private WebDriver setWebDriver() {
+
         switch (GuiConfig.BROWSER) {
-            case "chrome:":
+            case "chrome":
                 return new ChromeDriver();
             case "firefox":
                 return new FirefoxDriver();
@@ -54,30 +63,43 @@ public class ConfigFrontEnd {
         return new ChromeDriver();
     }
 
-    private void setRemoteDriver() {
+    private WebDriver setRemoteDriver() {
+        DesiredCapabilities desiredCapabilities = setUpDesCapabilities();
+        driver = null;
+        try {
+            driver = new RemoteWebDriver(new URL(GuiConfig.REMOTE_URL), desiredCapabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return driver;
+    }
+
+    private DesiredCapabilities setUpDesCapabilities() {
         DesiredCapabilities desiredCapabilities;
-        
+        desiredCapabilities = setUpRemoteBrowser();
+
+        desiredCapabilities.setPlatform(Platform.LINUX);
+        desiredCapabilities.setVersion("");
+        return desiredCapabilities;
+    }
+
+    private DesiredCapabilities setUpRemoteBrowser() {
+        DesiredCapabilities desiredCapabilities;
         switch (GuiConfig.BROWSER) {
-            case "chrome:":
+            case "chrome":
                 desiredCapabilities = DesiredCapabilities.chrome();
+                break;
             case "firefox":
                 desiredCapabilities = DesiredCapabilities.firefox();
+                break;
             case "edge":
                 desiredCapabilities = DesiredCapabilities.edge();
                 break;
             default:
                 desiredCapabilities = DesiredCapabilities.chrome();
         }
-        
-        desiredCapabilities.setPlatform(Platform.LINUX);
-        desiredCapabilities.setVersion("");
-
-        driver = null;
-        try {
-            driver = new RemoteWebDriver(new URL(GuiConfig.REMOTE_URL), desiredCapabilities);
-        } catch (MalformedURLException e){
-            e.printStackTrace();
-        }
+        return desiredCapabilities;
     }
 
     @AfterEach
