@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>qajunit</module>
+        <module>qagui</module>
     </modules>
 
     <properties>
@@ -25,6 +26,9 @@
         <jackson-module-jaxb-annotations.version>2.11.3</jackson-module-jaxb-annotations.version>
         <allure-maven.version>2.10.0</allure-maven.version>
         <allure.version>2.13.6</allure.version>
+        <selenium-java.version>3.141.59</selenium-java.version>
+        <guava.version>27.1-jre</guava.version>
+        <config.version>1.4.1</config.version>
     </properties>
 
     <dependencyManagement>
@@ -68,7 +72,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-jaxb-annotations</artifactId>
-                <version>${jackson-module-jaxb-annotations}</version>
+                <version>${jackson-module-jaxb-annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.qameta.allure</groupId>
@@ -101,6 +105,27 @@
                 <artifactId>allure-maven</artifactId>
                 <version>${allure-maven.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-java</artifactId>
+                <version>${selenium-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-api</artifactId>
+                <version>${selenium-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.typesafe</groupId>
+                <artifactId>config</artifactId>
+                <version>${config.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

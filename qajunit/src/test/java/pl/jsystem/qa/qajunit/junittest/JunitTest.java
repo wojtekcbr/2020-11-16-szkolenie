@@ -2,13 +2,13 @@ package pl.jsystem.qa.qajunit.junittest;
 
 import org.junit.jupiter.api.*;
 import pl.jsystem.qa.qajunit.ConfigJunit;
+import pl.jsystems.qa.junit.GamePlay;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,6 +86,16 @@ public class JunitTest extends ConfigJunit {
             assertThat(result).hasSize(5);
             assertThat(result).containsAnyOf(1, 2, 3);
 
+        }
+        @DisplayName("Exception test")
+        @Test
+        public void exceptionTest() {
+            GamePlay gamePlay = new GamePlay();
+            Assertions.assertThrows(IllegalArgumentException.class,
+                    () -> {
+                        gamePlay.play(0);
+                    }
+                    );
         }
     }
 }
