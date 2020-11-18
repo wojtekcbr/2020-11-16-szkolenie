@@ -29,6 +29,8 @@
         <selenium-java.version>3.141.59</selenium-java.version>
         <guava.version>27.1-jre</guava.version>
         <config.version>1.4.1</config.version>
+        <cucumber.version>4.5.2</cucumber.version>
+        <junit-4.version>4.13</junit-4.version>
     </properties>
 
     <dependencyManagement>
@@ -125,6 +127,30 @@
                 <artifactId>config</artifactId>
                 <version>${config.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-java</artifactId>
+                <version>${cucumber.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-junit</artifactId>
+                <version>${cucumber.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-picocontainer</artifactId>
+                <version>${cucumber.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit-4.version}</version>
+                <scope>test</scope>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

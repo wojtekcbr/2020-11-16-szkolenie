@@ -1,5 +1,5 @@
 
-package pl.jsystems.qa.qagui.classic.functional;
+package pl.jsystems.qa.qagui.cucumber.functional;
 
 import org.openqa.selenium.WebDriver;
 import pl.jsystems.qa.qagui.classic.page.LoginPage;
