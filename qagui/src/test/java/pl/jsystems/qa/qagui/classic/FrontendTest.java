@@ -67,6 +67,8 @@ public class FrontendTest {
         loginFunction.login();
 
         MainUserPage mainUserPage = new MainUserPage(driver);
+
+        mainUserPage.waitForElementToBeClickable(mainUserPage.userAvatar);
         mainUserPage.userAvatar.click();
 
         UserProfilePage userProfilePage = new UserProfilePage(driver);

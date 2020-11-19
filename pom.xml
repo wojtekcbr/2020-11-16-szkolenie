@@ -29,8 +29,9 @@
         <selenium-java.version>3.141.59</selenium-java.version>
         <guava.version>27.1-jre</guava.version>
         <config.version>1.4.1</config.version>
-        <cucumber.version>4.5.2</cucumber.version>
+        <cucumber.version>6.9.0</cucumber.version>
         <junit-4.version>4.13</junit-4.version>
+        <webdrivermanager.version>4.2.2</webdrivermanager.version>
     </properties>
 
     <dependencyManagement>
@@ -150,6 +151,12 @@
                 <version>${junit-4.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>io.github.bonigarcia</groupId>
+                <artifactId>webdrivermanager</artifactId>
+                <version>${webdrivermanager.version}</version>
+            </dependency>
+
 
 
         </dependencies>

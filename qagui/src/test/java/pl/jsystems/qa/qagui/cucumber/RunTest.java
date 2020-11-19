@@ -8,17 +8,37 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources",
         glue = "classpath:pl.jsystems.qa.qagui.cucumber",
-        plugin = {"pretty", "html:target/cucumber", "json:target/cucumber.json",
+        plugin = { "pretty", "summary", "html:target/cucumber/report.html", "json:target/cucumber.json",
                 "juint:target/cucumber,xml",
                 "return:target/cucumber.txt"
         },
+        snippets = CucumberOptions.SnippetType.CAMELCASE,
 
-        tags = {
-        "@userpanel",
-        "@wordpress",
-
-        }
-
+        tags = ""
+//             + "not " +
+//                    "@userpane" +
+//                    " and " +
+//            "not " +
+//                    "@wordpress" +
+//                    " and " +
+//            "not " +
+//                    "@login"
+//                            +
+//                    " and " +
+//            "not " +
+//                    "@BDD" +
+//                    " and " +
+//            "not " +
+//                    "@search" +
+//                    " and " +
+//            "not " +
+//                    "@website" +
+//                    " and " +
+//            "not " +
+//                    "@website_2" +
+//                    " and " +
+//            "not " +
+                + "@website_3"
 )
 public class RunTest {
 

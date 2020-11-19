@@ -8,12 +8,12 @@ pipeline {
 
     parameters {
         choice(name: 'ENVIRONMENT', choices: ['dev', 'test', 'stage', 'sandbox'], description: 'Choose environment.')
-        choice(name: 'TAG', choices: ['', 'junit', 'paramTest', 'noparamTest', 'sanity', 'second', 'string', 'wordpress', 'word', 'Frontend', 'login', 'ActionTest', 'Window'], description: 'Choose tag.')
-        choice(name: 'EXTAG', choices: ['','junit', 'paramTest', 'noparamTest', 'sanity', 'second', 'string', 'wordpress', 'word', 'Frontend', 'login', 'ActionTest', 'Window'], description: 'Choose tag.')
-        choice(name: 'CUCUMBER_TAG', choices: ['','@BDD', '@login', '@wordpress','@userpanel'], description: 'Choose cucumber tag.')
+        choice(name: 'TAG', choices: ['Frontend', 'login', 'ActionTest', 'Window'], description: 'Choose tag.')
+        choice(name: 'EXTAG', choices: ['', 'Frontend', 'login', 'ActionTest', 'Window'], description: 'Choose tag.')
+        choice(name: 'CUCUMBER_TAG', choices: ['@BDD', 'not @BDD', '@login', 'not @login', '@wordpress', 'not @wordpress', '@userpanel', 'not @userpanel', '@search', 'not @search', '@website', 'not @website', '@website_2', 'not @website_2', '@website_3', 'not @website_3'], description: 'Choose cucumber tag.')
         choice(name: 'BROWSER', choices: ['chrome','firefox', 'edge'], description: 'Choose browser type.')
         choice(name: 'MACHINE', choices: ['remote','local'], description: 'Choose machine type.')
-        string(name: 'REMOTE_URL', defaultValue: 'http://172.17.80.1:4444/wd/hub', description: 'Remote selenium grid url.')
+        string(name: 'REMOTE_URL', defaultValue: 'http://172.20.192.1:4444/wd/hub', description: 'Remote selenium grid url.')
     }
 
     stages {
@@ -24,7 +24,7 @@ pipeline {
         }
         stage('run') {
             steps {
-                sh "mvn clean test -Dgroups=${params.TAG} -DexcludedGroups=${params.EXTAG} -DENVIRONMENT=${params.ENVIRONMENT} -DBROWSER=${params.BROWSER} -DMACHINE=${params.MACHINE} -DREMOTE_URL=${params.REMOTE_URL} -Dcucumber.filter.tags=\"${params.CUCUMBER_TAG}\""
+                sh "mvn clean test -Dgroups=${params.TAG} -DexcludedGroups=${params.EXTAG} -DENVIRONMENT=${params.ENVIRONMENT} -DBROWSER=${params.BROWSER} -DMACHINE=${params.MACHINE} -DREMOTE_URL=${params.REMOTE_URL} -Dcucumber.filter.tags=\"${params.CUCUMBER_TAG}\" -pl qagui"
             }
         }
 
@@ -38,7 +38,7 @@ pipeline {
                          [key: 'allure.tests.management.pattern', value: 'http://tms.company.com/%s'],
                          ],
                          reportBuildPolicy: 'ALWAYS',
-                         results: [[path: 'qajunit/target/allure-results'], [path: 'qagui/target/allure-results']]
+                         results: [[path: 'qagui/target/allure-results']]
                          ])
                 cucumber buildStatus: 'UNSTABLE', failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*cucumber.json', jsonReportDirectory: 'qagui/target/', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
             }
