@@ -1,3 +1,4 @@
+@BDD
 Feature: Parameter tests
 
   @website
