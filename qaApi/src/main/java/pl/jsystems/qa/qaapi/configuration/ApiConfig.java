@@ -1,3 +1,4 @@
+
 package pl.jsystems.qa.qaapi.configuration;
 
 import com.typesafe.config.Config;
@@ -11,5 +12,4 @@ public class ApiConfig {
 
     public static final String BASE_URL = ENV.getString("baseUrl");
     public static final String API_KEY = ENV.getString("apikey");
-
 }

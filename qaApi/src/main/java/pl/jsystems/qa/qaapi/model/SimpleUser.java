@@ -12,4 +12,12 @@ public class SimpleUser {
 
     public SimpleUser() {
     }
+
+    @Override
+    public String toString() {
+        return "SimpleUser{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
 }

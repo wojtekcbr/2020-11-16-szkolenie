@@ -4,16 +4,18 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pl.jsystems.qa.qaapi.model.SimpleUser;
+import pl.jsystems.qa.qaapi.model.User;
+import pl.jsystems.qa.qaapi.service.UserService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static com.google.common.truth.Truth.assertThat;
-
-import pl.jsystems.qa.qaapi.model.SimpleUser;
-import pl.jsystems.qa.qaapi.model.User;
-import pl.jsystems.qa.qaapi.service.UserService;
 
 @DisplayName("ApiTest")
 public class ApiTest {
@@ -29,7 +31,6 @@ public class ApiTest {
                 .statusCode(200)
                 .body("name", equalTo("Piotr"))
                 .body("surname", equalTo("Kowalski"));
-
     }
 
     @DisplayName("User with devices test")
@@ -47,8 +48,7 @@ public class ApiTest {
                 .body("[0].nazwisko", notNullValue())
                 .body("[0].nazwisko", equalTo("Kowalski"))
                 .body("[0].device[0].type", notNullValue())
-                .body("[0].device[0].type", equalTo("computer"))
-                .body("[0].device[0].device.model[0].produce", equalTo("dell"));
+                .body("[0].device[0].type", equalTo("computer"));
     }
 
     @DisplayName("User with devices by model")
@@ -73,6 +73,9 @@ public class ApiTest {
     @DisplayName("User with devices split response")
     @Test
     public void splitResponse() {
+
+        //given
+        //when
         Response response = UserService.returnUserResponse();
         List<User> users = UserService.getUsers();
 
@@ -85,7 +88,6 @@ public class ApiTest {
         assertThat(users.get(0).device.get(0).deviceModel.get(0).produce).isEqualTo("dell");
         assertThat(users.get(0).device.get(0).deviceModel.get(0).screenSize).isEqualTo(17);
         assertThat(users.get(0).device.size()).isEqualTo(2);
-
     }
 
     @DisplayName("Add user")
@@ -114,4 +116,28 @@ public class ApiTest {
         assertThat(user.name).isEqualTo("Piotr");
         assertThat(user.surname).isEqualTo("Kowalski");
     }
+
+    @DisplayName("Get user by queryParam and pathVariable.")
+    @Test
+    public void getUserByQueryparamAndPathVariable() {
+
+        //given
+        long id = 1;
+
+        List<String> idParams = new ArrayList<>();
+        idParams.add("Paweł");
+        idParams.add("Piotr");
+
+        Map<String, List<String>> queryParams = new HashMap<>();
+        queryParams.put("name", idParams);
+
+        //when
+        SimpleUser user = UserService.getUserByParams(queryParams, id);
+
+        //then
+        assertThat(user.name).isEqualTo("Piotr");
+        assertThat(user.surname).isEqualTo("Kowalski");
+
+    }
+
 }
