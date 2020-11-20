@@ -3,11 +3,15 @@ package pl.jsystems.qa.qaapi;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pl.jsystems.qa.qaapi.model.SimpleUser;
-import pl.jsystems.qa.qaapi.model.User;
+import pl.jsystems.qa.qaapi.model.usersdevice.GenericUser;
+import pl.jsystems.qa.qaapi.model.usersdevice.SimpleUser;
+import pl.jsystems.qa.qaapi.model.usersdevice.User;
+import pl.jsystems.qa.qaapi.model.error.ErrorResponse;
 import pl.jsystems.qa.qaapi.service.UserService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +21,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static com.google.common.truth.Truth.assertThat;
 
+@Tag("API")
 @DisplayName("ApiTest")
 public class ApiTest {
 
@@ -31,6 +36,7 @@ public class ApiTest {
                 .statusCode(200)
                 .body("name", equalTo("Piotr"))
                 .body("surname", equalTo("Kowalski"));
+
     }
 
     @DisplayName("User with devices test")
@@ -49,6 +55,7 @@ public class ApiTest {
                 .body("[0].nazwisko", equalTo("Kowalski"))
                 .body("[0].device[0].type", notNullValue())
                 .body("[0].device[0].type", equalTo("computer"));
+//                .body("[0].device[0].device.model[0].produce", equalTo("dell"));
     }
 
     @DisplayName("User with devices by model")
@@ -73,6 +80,14 @@ public class ApiTest {
     @DisplayName("User with devices split response")
     @Test
     public void splitResponse() {
+//        Response response = RestAssured
+//                .given()
+//                .get("http://www.mocky.io/v2/5a6a58222e0000d0377a7789")
+//                .andReturn();
+
+
+//        List<User> users = response.then().extract().body().jsonPath().getList("", User.class);
+//        List<User> users = response.then().extract().body().jsonPath().getList("", User.class);
 
         //given
         //when
@@ -88,6 +103,7 @@ public class ApiTest {
         assertThat(users.get(0).device.get(0).deviceModel.get(0).produce).isEqualTo("dell");
         assertThat(users.get(0).device.get(0).deviceModel.get(0).screenSize).isEqualTo(17);
         assertThat(users.get(0).device.size()).isEqualTo(2);
+
     }
 
     @DisplayName("Add user")
@@ -139,5 +155,39 @@ public class ApiTest {
         assertThat(user.surname).isEqualTo("Kowalski");
 
     }
+
+    @DisplayName("Error response for incorrect id.")
+    @Test
+    public void errorResponse() {
+        //given
+        long id = 1;
+
+        //when
+        ErrorResponse errorResponse = UserService.getErrorResponse(id);
+
+        //then
+        assertThat(errorResponse.error.errorCode).isEqualTo(400);
+        assertThat(errorResponse.error.validationError).isEqualTo("invalid_email");
+        assertThat(errorResponse.error.message).isEqualTo("your email is invalid");
+    }
+
+    @DisplayName("Generic type , String")
+    @Test
+    public void genericString() throws IOException {
+        //
+        GenericUser<String> user = UserService.getGenericStringUser();
+
+        assertThat(user.id).isEqualTo("1");
+    }
+
+    @DisplayName("Generic type , String")
+    @Test
+    public void genericInteger() throws IOException {
+        //
+        GenericUser<Integer> user = UserService.getGenericIntegerUser();
+
+        assertThat(user.id).isEqualTo(1);
+    }
+
 
 }

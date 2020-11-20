@@ -13,4 +13,7 @@ public class Service {
                 .get(host)
                 .andReturn();
     }
+    public static JsonPath returnResponseUnPack(String host) {
+        return returnResponse(host).then().extract().body().jsonPath();
+    }
 }

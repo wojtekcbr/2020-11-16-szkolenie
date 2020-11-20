@@ -12,4 +12,5 @@ public class ApiConfig {
 
     public static final String BASE_URL = ENV.getString("baseUrl");
     public static final String API_KEY = ENV.getString("apikey");
+    public static final String AZURE_URL = ENV.getString("azureUrl");
 }

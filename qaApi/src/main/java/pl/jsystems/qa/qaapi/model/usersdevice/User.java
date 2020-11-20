@@ -1,7 +1,8 @@
 
-package pl.jsystems.qa.qaapi.model;
+package pl.jsystems.qa.qaapi.model.usersdevice;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import pl.jsystems.qa.qaapi.model.usersdevice.Device;
 
 import java.util.List;
 

@@ -22,6 +22,14 @@ pipeline {
                git 'https://github.com/testautomation112020/qa.git'
             }
         }
+        stage('build') {
+                    step,
+                    ,s
+
+                     2{
+                        sh "mvn clean install -DskipTests"
+                    }
+                }
         stage('run') {
             steps {
                 sh "mvn clean test -Dgroups=${params.TAG} -DexcludedGroups=${params.EXTAG} -DENVIRONMENT=${params.ENVIRONMENT} -DBROWSER=${params.BROWSER} -DMACHINE=${params.MACHINE} -DREMOTE_URL=${params.REMOTE_URL} -Dcucumber.filter.tags=\"${params.CUCUMBER_TAG}\""
