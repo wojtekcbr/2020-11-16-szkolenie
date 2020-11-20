@@ -3,7 +3,6 @@ package pl.jsystems.qa.qagui.cucumber.steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java.it.Ma;
 import org.openqa.selenium.WebDriver;
 import pl.jsystems.qa.qagui.classic.page.MainUserPage;
 import pl.jsystems.qa.qagui.config.GuiConfig;
@@ -12,11 +11,11 @@ import pl.jsystems.qa.qagui.cucumber.functional.LoginFunction;
 
 import static com.google.common.truth.Truth.assertThat;
 
-public class LogSteps {
+public class LoginSteps {
 
     private WebDriver driver;
 
-    public LogSteps(ConfigBaseSteps configBaseSteps) {
+    public LoginSteps(ConfigBaseSteps configBaseSteps) {
         this.driver = configBaseSteps.setUpWebDriver();
     }
     @Given("User start on main page")
